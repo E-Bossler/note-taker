@@ -46,15 +46,20 @@ app.post('/api/notes', (req, res) => {
 });
 
 app.delete('/api/notes/:id', (req, res) => {
+    const noteIDToDelete = req.params.id;
+    console.log(noteIDToDelete);
     for (let i=0; i < notes.length; i++ ) {
-        if (req.params.id === notes[i].id) {
+        if (noteIDToDelete == notes[i].id) {
             notes.splice(i, 1);
             res.send(notes)
             fs.writeFile('./db/db.json'), JSON.stringify(notes), err => {
                 if (err) throw err;
             }
+            console.log('Note deleted.')
+        } else {
+            console.log('something happened. The ID did not match')
         }
-        console.log('Note deleted.')
+       
     }
 });
 
